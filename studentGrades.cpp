@@ -103,8 +103,8 @@ void assignLetterGrade(Student* students, int numStudents) {
 
 void displayReport(const Student* students, int numStudents, int numGrades) {
 	cout << left << setw(10) << "Name" << setw(10) << "ID";
-	for (int i = 0; i < numStudents; i++) {
-		cout << right << setw(10) << ("Grade " + to_string(i + 1));
+	for (int i = 0; i < numGrades; i++) {
+		cout << right << setw(10) << ("Test " + to_string(i + 1));
 	}
 	cout << right << setw(10) << "Average" << setw(10) << "Grade" << endl;
 
