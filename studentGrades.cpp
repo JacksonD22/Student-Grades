@@ -36,7 +36,7 @@ int main() {
 	getAverages(students, numStudents, numGrades);
 	assignLetterGrade(students, numStudents, numGrades);
 	displayReport(students, numStudents, numGrades);
-	/*releaseMemory(students, numStudents);*/
+	releaseMemory(students, numStudents);
 }
 
 string getData(){
@@ -114,3 +114,14 @@ void displayReport(const Student* students, int numStudents, int numGrades) {
 	}
 }
 
+void releaseMemory(Student*& students, int numStudents) {
+	if (students == nullptr) {
+		return;
+	}
+	for (int i = 0; i < numStudents; i++) {
+		delete[] students[i].scores;
+		students[i].scores = nullptr;
+	}
+	delete[] students;
+	students = nullptr;
+}
