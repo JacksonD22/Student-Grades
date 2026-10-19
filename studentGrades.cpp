@@ -16,7 +16,7 @@ string getData();
 bool openFile(ifstream& file, string filename);
 bool readData(ifstream& file, Student*& students, int& numStudents, int& numGrades);
 void getAverages(Student* students, int numStudents, int numGrades);
-void assignLetterGrade(Student* students, int numStudents, int numGrades);
+void assignLetterGrade(Student* students, int numStudents);
 void displayReport(const Student* students, int numStudents, int numGrades);
 void releaseMemory(Student*& students, int numStudents);
 
@@ -30,13 +30,13 @@ int main() {
 	if (!openFile(file, filename)) {
 		return 1;
 	}
-	return 0;
 	
 	readData(file, students, numStudents, numGrades);
 	getAverages(students, numStudents, numGrades);
-	assignLetterGrade(students, numStudents, numGrades);
+	assignLetterGrade(students, numStudents);
 	displayReport(students, numStudents, numGrades);
 	releaseMemory(students, numStudents);
+	return 0;
 }
 
 string getData(){
@@ -57,6 +57,7 @@ bool openFile(ifstream& file, string filename) {
 }
 
 bool readData(ifstream& file, Student*& students, int& numStudents, int& numGrades) {
+	file >> numStudents >> numGrades;
 	students = new Student[numStudents];
 	for (int i = 0; i < numStudents; i++) {
 		students[i].scores = nullptr;
@@ -66,8 +67,11 @@ bool readData(ifstream& file, Student*& students, int& numStudents, int& numGrad
 
 	for (int i = 0; i < numStudents; i++) {
 		students[i].scores = new double[numGrades];
+		file >> students[i].lastName >> students[i].studentID;
+		for (int j = 0; j < numGrades; j++) {
+			file >> students[i].scores[j];
+		}
 	}
-
 return true;
 }
 
@@ -81,7 +85,7 @@ void getAverages(Student* students, int numStudents, int numGrades) {
 	}
 }
 
-void assignLetterGrade(Student* students, int numStudents, int numGrades) {
+void assignLetterGrade(Student* students, int numStudents) {
 	for (int i = 0; i < numStudents; i++) {
 		double average = students[i].averages;
 		if (average >= 90)
@@ -106,11 +110,11 @@ void displayReport(const Student* students, int numStudents, int numGrades) {
 
 	cout << fixed << setprecision(2);
 	for (int i = 0; i < numStudents; i++) {
-		cout << left << setw(15) << students[i].lastName << setw(10) << students[i].studentID;
+		cout << left << setw(10) << students[i].lastName << setw(10) << students[i].studentID;
 		for (int j = 0; j < numGrades; j++) {
 			cout << right << setw(10) << students[i].scores[j];
 		}
-		cout << right << setw(10) << students[i].averages << setw(8) << students[i].letterGrade << endl;
+		cout << right << setw(10) << students[i].averages << setw(10) << students[i].letterGrade << endl;
 	}
 }
 
