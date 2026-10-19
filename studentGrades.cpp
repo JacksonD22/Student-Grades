@@ -55,3 +55,45 @@ bool openFile(ifstream& file, string filename) {
 	}
 	return true;
 }
+
+bool readData(ifstream& file, Student*& students, int& numStudents, int& numGrades) {
+	students = new Student[numStudents];
+	for (int i = 0; i < numStudents; i++) {
+		students[i].scores = nullptr;
+		students[i].averages = 0;
+		students[i].letterGrade = ' ';
+	}
+
+	for (int i = 0; i < numStudents; i++) {
+		students[i].scores = new double[numGrades];
+	}
+
+return true;
+}
+
+void getAverages(Student* students, int numStudents, int numGrades) {
+	for (int i = 0; i < numStudents; i++) {
+		double total = 0;
+		for (int j = 0; j < numGrades; j++) {
+			total += students[i].scores[j];
+		}
+		students[i].averages = total / numGrades;
+	}
+}
+
+void assignLetterGrade(Student* students, int numStudents, int numGrades) {
+	for (int i = 0; i < numStudents; i++) {
+		double average = students[i].averages;
+		if (average >= 90)
+			students[i].letterGrade = 'A';
+		else if (average < 90 && average >= 80)
+			students[i].letterGrade = 'B';
+		else if (average < 80 && average >= 70)
+			students[i].letterGrade = 'C';
+		else if (average < 70 && average >= 60)
+			students[i].letterGrade = 'D';
+		else
+			students[i].letterGrade = 'F';
+	}
+}
+
